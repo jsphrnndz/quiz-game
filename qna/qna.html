@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Math Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .question {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .score {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Grade 6 Math Quiz</h2>
+
+        <!-- Question 1: Multiple Choice -->
+        <div class="question active" id="q1">
+            <p>1. What is 8 × 7?</p>
+            <button onclick="checkAnswer(1, 'A')">A. 54</button>
+            <button onclick="checkAnswer(1, 'B')">B. 56</button>
+            <button onclick="checkAnswer(1, 'C')">C. 64</button>
+            <p id="feedback1"></p>
+        </div>
+
+        <!-- Question 2: Multiple Choice -->
+        <div class="question" id="q2">
+            <p>2. What is the value of 3²?</p>
+            <button onclick="checkAnswer(2, 'A')">A. 6</button>
+            <button onclick="checkAnswer(2, 'B')">B. 9</button>
+            <button onclick="checkAnswer(2, 'C')">C. 12</button>
+            <p id="feedback2"></p>
+        </div>
+
+        <!-- Question 3: Input -->
+        <div class="question" id="q3">
+            <p>3. Solve: 25 + 36 = ?</p>
+            <input type="number" id="ans3">
+            <button onclick="checkInputAnswer(3, 61)">Submit</button>
+            <p id="feedback3"></p>
+        </div>
+
+        <!-- Question 4: Input -->
+        <div class="question" id="q4">
+            <p>4. What is 144 ÷ 12?</p>
+            <input type="number" id="ans4">
+            <button onclick="checkInputAnswer(4, 12)">Submit</button>
+            <p id="feedback4"></p>
+        </div>
+
+        <!-- Question 5: Input -->
+        <div class="question" id="q5">
+            <p>5. Find the square root of 49.</p>
+            <input type="number" id="ans5">
+            <button onclick="checkInputAnswer(5, 7)">Submit</button>
+            <p id="feedback5"></p>
+        </div>
+
+        <!-- Final Score -->
+        <div class="question" id="final">
+            <h3>Quiz Completed!</h3>
+            <p class="score">Your Score: <span id="score">0</span>/5</p>
+            <button onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQuestion = 1;
+
+        const correctAnswers = {
+            1: 'B', 
+            2: 'B'
+        };
+
+        function checkAnswer(question, answer) {
+            let feedback = document.getElementById('feedback' + question);
+            if (correctAnswers[question] === answer) {
+                feedback.innerHTML = "Correct!";
+                feedback.style.color = "green";
+                score++;
+            } else {
+                feedback.innerHTML = "Incorrect!";
+                feedback.style.color = "red";
+            }
+            setTimeout(nextQuestion, 1000);
+        }
+
+        function checkInputAnswer(question, correct) {
+            let userAnswer = document.getElementById('ans' + question).value;
+            let feedback = document.getElementById('feedback' + question);
+
+            if (parseInt(userAnswer) === correct) {
+                feedback.innerHTML = "Correct!";
+                feedback.style.color = "green";
+                score++;
+            } else {
+                feedback.innerHTML = "Incorrect!";
+                feedback.style.color = "red";
+            }
+            setTimeout(nextQuestion, 1000);
+        }
+
+        function nextQuestion() {
+            document.getElementById('q' + currentQuestion).classList.remove('active');
+            currentQuestion++;
+            if (currentQuestion <= 5) {
+                document.getElementById('q' + currentQuestion).classList.add('active');
+            } else {
+                document.getElementById('final').classList.add('active');
+                document.getElementById('score').innerText = score;
+            }
+        }
+
+        function restartQuiz() {
+            score = 0;
+            currentQuestion = 1;
+            document.getElementById('final').classList.remove('active');
+            document.getElementById('q1').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
